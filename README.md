@@ -1,7 +1,7 @@
 # internship
 
 ## Introduction
-This program matches locations to their respective regions based on their coordinates. The program reads two JSON files as input, one containing locations and the other containing regions, and generates a JSON file as output, which lists all regions and the locations that fall within those regions.
+This program matches locations to their respective regions based on their coordinates. The program reads two JSON files as input from App_Data folder, one containing locations and the other containing regions, and generates a JSON file as output into App_Data folder, which lists all regions and the locations that fall within those regions.
 
 ## Prerequisites
 - .NET 7.0

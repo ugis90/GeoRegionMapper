@@ -1,7 +1,17 @@
-# internship
+# Internship
 
-## Introduction
-This program matches locations to their respective regions based on their coordinates. The program reads two JSON files as input from App_Data folder, one containing locations and the other containing regions, and generates a JSON file as output into App_Data folder, which lists all regions and the locations that fall within those regions.
+### Introduction
+
+This program links locations to regions using their GPS coordinates. It works by:
+
+1. Reading two JSON files from the App_Data folder.
+    -The first file defines locations.
+    -The second file defines regions.
+
+2. After reading these files, the program calculates which locations belong to which regions.
+
+3. Finally, it creates a new JSON file in the App_Data folder.
+    -This output file organizes all regions and shows which locations are part of them.
 
 ## Prerequisites
 - .NET 6.0

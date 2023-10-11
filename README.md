@@ -2,7 +2,7 @@
 
 ### Introduction
 
-This program links locations to regions using their GPS coordinates. It works by:
+This program links locations to regions using their coordinates. It works by:
 
 1. Reading two JSON files from the App_Data folder.
     -The first file defines locations.

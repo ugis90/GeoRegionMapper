@@ -8,7 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="App_Data\" />
+    <Folder Include="App_Code\" />
   </ItemGroup>
 
 </Project>

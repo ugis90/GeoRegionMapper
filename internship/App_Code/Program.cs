@@ -25,7 +25,8 @@ namespace internship
 																   select location.Name).ToList() // select the name of the matched locations
 										   select new MatchedRegion { Region = region.Name, MatchedLocations = matchedLocations }).ToList();
 
-			string resultsJson = JsonSerializer.Serialize(results);
+			JsonSerializerOptions options = new JsonSerializerOptions { WriteIndented = true };
+			string resultsJson = JsonSerializer.Serialize(results, options);
 			File.WriteAllText("App_Data/results.json", resultsJson);
 		}
 	}

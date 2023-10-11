@@ -23,5 +23,5 @@ This program matches locations to their respective regions based on their coordi
     ```
 2. Run the application with the following command.
     ```bash
-    dotnet run
+    dotnet run --regions=regions.json --locations=locations.json --output=results.json
     ```

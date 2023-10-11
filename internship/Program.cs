@@ -6,8 +6,8 @@ namespace internship
 	{
 		private static void Main()
 		{
-			string regionsJson = File.ReadAllText("regions.json");
-			string locationsJson = File.ReadAllText("locations.json");
+			string regionsJson = File.ReadAllText("App_Data/regions.json");
+			string locationsJson = File.ReadAllText("App_Data/locations.json");
 
 			List<Region>? regions = JsonSerializer.Deserialize<List<Region>>(regionsJson);
 			List<Location>? locations = JsonSerializer.Deserialize<List<Location>>(locationsJson);
@@ -26,7 +26,7 @@ namespace internship
 										   select new MatchedRegion { Region = region.Name, MatchedLocations = matchedLocations }).ToList();
 
 			string resultsJson = JsonSerializer.Serialize(results);
-			File.WriteAllText("results.json", resultsJson);
+			File.WriteAllText("App_Data/results.json", resultsJson);
 		}
 	}
 }

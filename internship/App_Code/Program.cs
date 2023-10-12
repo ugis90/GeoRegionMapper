@@ -1,4 +1,5 @@
-﻿using System.Text.Json;
+﻿using Microsoft.Extensions.Configuration;
+using System.Text.Json;
 
 namespace internship
 {
@@ -6,8 +7,17 @@ namespace internship
 	{
 		private static void Main(string[] args)
 		{
-			string regionsJson = File.ReadAllText("App_Data/regions.json");
-			string locationsJson = File.ReadAllText("App_Data/locations.json");
+			IConfigurationRoot config = new ConfigurationBuilder()
+				.AddCommandLine(args)
+				.Build();
+
+			// Looks for files in App_Data folder
+			string regionsFilePath = Path.Combine("App_Data", config["regions"] ?? "regions.json");
+			string locationsFilePath = Path.Combine("App_Data", config["locations"] ?? "locations.json");
+			string outputFilePath = Path.Combine("App_Data", config["output"] ?? "results.json");
+
+			string regionsJson = File.ReadAllText(regionsFilePath);
+			string locationsJson = File.ReadAllText(locationsFilePath);
 
 			List<Region>? regions = JsonSerializer.Deserialize<List<Region>>(regionsJson);
 			List<Location>? locations = JsonSerializer.Deserialize<List<Location>>(locationsJson);
@@ -35,7 +45,7 @@ namespace internship
 
 			JsonSerializerOptions options = new() { WriteIndented = true };
 			string resultsJson = JsonSerializer.Serialize(results, options);
-			File.WriteAllText("App_Data/results.json", resultsJson);
+			File.WriteAllText(outputFilePath, resultsJson);
 		}
 	}
 }

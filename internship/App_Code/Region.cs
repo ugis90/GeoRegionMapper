@@ -7,9 +7,9 @@ namespace internship;
 /// </summary>
 public class Region
 {
-	[JsonPropertyName("name")]
-	public string? Name { get; set; }
+    [JsonPropertyName("name")]
+    public string? Name { get; set; }
 
-	[JsonPropertyName("coordinates")]
-	public List<List<double[]>>? Polygons { get; set; }
+    [JsonPropertyName("coordinates")]
+    public List<List<double[]>>? Polygons { get; set; }
 }

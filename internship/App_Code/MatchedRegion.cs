@@ -7,9 +7,9 @@ namespace internship;
 /// </summary>
 public class MatchedRegion
 {
-	[JsonPropertyName("region")]
-	public string? Region { get; set; }
+    [JsonPropertyName("region")]
+    public string? Region { get; set; }
 
-	[JsonPropertyName("matched_locations")]
-	public List<string>? MatchedLocations { get; set; }
+    [JsonPropertyName("matched_locations")]
+    public List<string>? MatchedLocations { get; set; }
 }

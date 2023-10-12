@@ -4,7 +4,7 @@ namespace internship
 {
 	internal class Program
 	{
-		private static void Main()
+		private static void Main(string[] args)
 		{
 			string regionsJson = File.ReadAllText("App_Data/regions.json");
 			string locationsJson = File.ReadAllText("App_Data/locations.json");
@@ -18,12 +18,20 @@ namespace internship
 				return;
 			}
 
-			List<MatchedRegion> results = (from region in regions
-										   let matchedLocations = (from polygon in region.Polygons
-																   from location in locations
-																   where TaskUtils.IsPointInPolygon(location.Coordinates, polygon) // check if the location is inside the polygon
-																   select location.Name).ToList() // select the name of the matched locations
-										   select new MatchedRegion { Region = region.Name, MatchedLocations = matchedLocations }).ToList();
+			List<MatchedRegion> results = (
+				from region in regions
+				let matchedLocations = (
+					from polygon in region.Polygons
+					from location in locations
+					where TaskUtils.IsPointInPolygon(location.Coordinates, polygon) // check if the location is inside the polygon
+					select location.Name // select the location name
+				).ToList()
+				select new MatchedRegion
+				{
+					Region = region.Name,
+					MatchedLocations = matchedLocations
+				}
+			).ToList();
 
 			JsonSerializerOptions options = new() { WriteIndented = true };
 			string resultsJson = JsonSerializer.Serialize(results, options);

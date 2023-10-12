@@ -7,9 +7,9 @@ namespace internship;
 /// </summary>
 public class Location
 {
-	[JsonPropertyName("name")]
-	public string? Name { get; set; }
+    [JsonPropertyName("name")]
+    public string? Name { get; set; }
 
-	[JsonPropertyName("coordinates")]
-	public double[]? Coordinates { get; set; }
+    [JsonPropertyName("coordinates")]
+    public double[]? Coordinates { get; set; }
 }

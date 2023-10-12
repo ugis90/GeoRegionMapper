@@ -24,7 +24,7 @@ namespace internship
 					from polygon in region.Polygons
 					from location in locations
 					where TaskUtils.IsPointInPolygon(location.Coordinates, polygon) // check if the location is inside the polygon
-					select location.Name // select the location name
+					select location.Name
 				).ToList()
 				select new MatchedRegion
 				{

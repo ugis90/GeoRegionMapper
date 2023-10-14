@@ -1,5 +1,7 @@
-﻿using Microsoft.Extensions.Configuration;
-using System.Text.Json;
+﻿using System.Text.Json;
+using internship.Classes;
+using internship.Utils;
+using Microsoft.Extensions.Configuration;
 
 namespace internship
 {
@@ -7,45 +9,46 @@ namespace internship
 	{
 		private static void Main(string[] args)
 		{
-			IConfigurationRoot config = new ConfigurationBuilder()
-				.AddCommandLine(args)
-				.Build();
-
-			// Looks for files in App_Data folder
-			string regionsFilePath = Path.Combine("App_Data", config["regions"] ?? "regions.json");
-			string locationsFilePath = Path.Combine("App_Data", config["locations"] ?? "locations.json");
-			string outputFilePath = Path.Combine("App_Data", config["output"] ?? "results.json");
-
-			string regionsJson = File.ReadAllText(regionsFilePath);
-			string locationsJson = File.ReadAllText(locationsFilePath);
-
-			List<Region>? regions = JsonSerializer.Deserialize<List<Region>>(regionsJson);
-			List<Location>? locations = JsonSerializer.Deserialize<List<Location>>(locationsJson);
-
-			if (regions == null || locations == null)
+			try
 			{
-				Console.WriteLine("Failed to deserialize regions or locations");
-				return;
-			}
+				IConfigurationRoot config = InOutUtils.InitializeConfig(args);
+				var (regionsJson, locationsJson, outputFilePath) = InOutUtils.ReadJsonFiles(config);
 
-			List<MatchedRegion> results = (
-				from region in regions
-				let matchedLocations = (
-					from polygon in region.Polygons
-					from location in locations
-					where TaskUtils.IsPointInPolygon(location.Coordinates, polygon) // check if the location is inside the polygon
-					select location.Name
-				).ToList()
-				select new MatchedRegion
+				JsonSerializerOptions options = InOutUtils.InitializeJsonOptions();
+				var regions = JsonSerializer.Deserialize<List<Region>>(regionsJson, options);
+				var locations = JsonSerializer.Deserialize<List<Location>>(locationsJson, options);
+
+				if (regions == null || locations == null)
 				{
-					Region = region.Name,
-					MatchedLocations = matchedLocations
+					Console.WriteLine("Failed to deserialize regions or locations");
+					return;
 				}
-			).ToList();
+				if (!regions.Any() || !locations.Any())
+				{
+					Console.WriteLine("Regions or locations list is empty");
+					return;
+				}
 
-			JsonSerializerOptions options = new() { WriteIndented = true };
-			string resultsJson = JsonSerializer.Serialize(results, options);
-			File.WriteAllText(outputFilePath, resultsJson);
+				List<MatchedRegion> results = TaskUtils.MatchRegionsAndLocations(
+					regions,
+					locations
+				);
+				string resultsJson = JsonSerializer.Serialize(results, options);
+
+				File.WriteAllText(outputFilePath, resultsJson);
+			}
+			catch (FileNotFoundException e)
+			{
+				Console.WriteLine($"File not found: {e.Message}");
+			}
+			catch (JsonException e)
+			{
+				Console.WriteLine($"JSON error: {e.Message}");
+			}
+			catch (Exception e)
+			{
+				Console.WriteLine($"An error occurred: {e.Message}");
+			}
 		}
 	}
 }

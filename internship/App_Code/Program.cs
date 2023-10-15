@@ -2,8 +2,6 @@
 using internship.Classes;
 using internship.Utils;
 using Microsoft.Extensions.Configuration;
-using System;
-using System.Diagnostics;
 
 namespace internship
 {

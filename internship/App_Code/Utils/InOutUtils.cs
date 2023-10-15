@@ -1,5 +1,4 @@
-﻿using System.Text;
-using System.Text.Json;
+﻿using System.Text.Json;
 using internship.Classes;
 using Microsoft.Extensions.Configuration;
 
@@ -94,6 +93,11 @@ namespace internship.Utils
 			return JsonSerializer.Serialize(featureCollection);
 		}
 
+		/// <summary>
+		/// Check if regions and locations are valid
+		/// </summary>
+		/// <param name="regions">regions containing polygons</param>
+		/// <param name="locations">locations containing a coordinate</param>
 		public static void ValidateData(List<Region> regions, List<Location> locations)
 		{
 			if (regions == null || locations == null)

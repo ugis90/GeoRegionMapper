@@ -76,6 +76,11 @@ public static class TaskUtils
 		).ToList();
 	}
 
+	/// <summary>
+	/// Opens the given regions and locations in geojson.io
+	/// </summary>
+	/// <param name="regions">regions containing polygons</param>
+	/// <param name="locations">locations containing a coordinate</param>
 	public static void OpenInBrowser(List<Region> regions, List<Location> locations)
 	{
 		string combinedGeoJson = InOutUtils.ToGeoJsonFeatureCollection(regions, locations);

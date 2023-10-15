@@ -1,4 +1,5 @@
 ﻿using internship.Classes;
+using System.Diagnostics;
 
 namespace internship.Utils;
 
@@ -73,5 +74,14 @@ public static class TaskUtils
 			).ToList()
 			select new MatchedRegion(region.Name, matchedLocations)
 		).ToList();
+	}
+
+	public static void OpenInBrowser(List<Region> regions, List<Location> locations)
+	{
+		string combinedGeoJson = InOutUtils.ToGeoJsonFeatureCollection(regions, locations);
+		string urlEncodedData = Uri.EscapeDataString(combinedGeoJson);
+		string url = $"http://geojson.io/#data=data:application/json,{urlEncodedData}";
+
+		Process.Start(new ProcessStartInfo { FileName = url, UseShellExecute = true });
 	}
 }

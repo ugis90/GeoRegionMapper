@@ -23,16 +23,7 @@ namespace internship
 				regions = JsonSerializer.Deserialize<List<Region>>(regionsJson, options);
 				locations = JsonSerializer.Deserialize<List<Location>>(locationsJson, options);
 
-				if (regions == null || locations == null)
-				{
-					Console.WriteLine("Failed to deserialize regions or locations");
-					Environment.Exit(1);
-				}
-				if (!regions.Any() || !locations.Any())
-				{
-					Console.WriteLine("Regions or locations list is empty");
-					Environment.Exit(1);
-				}
+				InOutUtils.ValidateData(regions, locations);
 
 				List<MatchedRegion> results = TaskUtils.MatchRegionsAndLocations(
 					regions,
@@ -45,21 +36,28 @@ namespace internship
 			catch (FileNotFoundException e)
 			{
 				Console.WriteLine($"File not found: {e.Message}");
+				Environment.Exit(1);
 			}
 			catch (JsonException e)
 			{
 				Console.WriteLine($"JSON error: {e.Message}");
+				Environment.Exit(1);
 			}
 			catch (Exception e)
 			{
 				Console.WriteLine($"An error occurred: {e.Message}");
+				Environment.Exit(1);
 			}
 
 			// Optional: open locations and regions in geojson.io
-			string combinedGeoJson = InOutUtils.ToGeoJsonFeatureCollection(regions, locations);
-			string urlEncodedData = Uri.EscapeDataString(combinedGeoJson);
-			string url = $"http://geojson.io/#data=data:application/json,{urlEncodedData}";
-			Process.Start(new ProcessStartInfo { FileName = url, UseShellExecute = true });
+			try
+			{
+				TaskUtils.OpenInBrowser(regions, locations);
+			}
+			catch (Exception e)
+			{
+				Console.WriteLine($"Failed to open browser: {e.Message}");
+			}
 		}
 	}
 }

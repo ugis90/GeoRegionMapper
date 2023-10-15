@@ -93,5 +93,19 @@ namespace internship.Utils
 
 			return JsonSerializer.Serialize(featureCollection);
 		}
+
+		public static void ValidateData(List<Region> regions, List<Location> locations)
+		{
+			if (regions == null || locations == null)
+			{
+				Console.WriteLine("Failed to deserialize regions or locations");
+				Environment.Exit(1);
+			}
+			if (!regions.Any() || !locations.Any())
+			{
+				Console.WriteLine("Regions or locations list is empty");
+				Environment.Exit(1);
+			}
+		}
 	}
 }

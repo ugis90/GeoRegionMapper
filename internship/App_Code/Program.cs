@@ -2,6 +2,8 @@
 using internship.Classes;
 using internship.Utils;
 using Microsoft.Extensions.Configuration;
+using System;
+using System.Diagnostics;
 
 namespace internship
 {
@@ -9,24 +11,27 @@ namespace internship
 	{
 		private static void Main(string[] args)
 		{
+			var regions = new List<Region>();
+			var locations = new List<Location>();
+
 			try
 			{
 				IConfigurationRoot config = InOutUtils.InitializeConfig(args);
 				var (regionsJson, locationsJson, outputFilePath) = InOutUtils.ReadJsonFiles(config);
 
 				JsonSerializerOptions options = InOutUtils.InitializeJsonOptions();
-				var regions = JsonSerializer.Deserialize<List<Region>>(regionsJson, options);
-				var locations = JsonSerializer.Deserialize<List<Location>>(locationsJson, options);
+				regions = JsonSerializer.Deserialize<List<Region>>(regionsJson, options);
+				locations = JsonSerializer.Deserialize<List<Location>>(locationsJson, options);
 
 				if (regions == null || locations == null)
 				{
 					Console.WriteLine("Failed to deserialize regions or locations");
-					return;
+					Environment.Exit(1);
 				}
 				if (!regions.Any() || !locations.Any())
 				{
 					Console.WriteLine("Regions or locations list is empty");
-					return;
+					Environment.Exit(1);
 				}
 
 				List<MatchedRegion> results = TaskUtils.MatchRegionsAndLocations(
@@ -49,6 +54,12 @@ namespace internship
 			{
 				Console.WriteLine($"An error occurred: {e.Message}");
 			}
+
+			// Optional: open locations and regions in geojson.io
+			string combinedGeoJson = InOutUtils.ToGeoJsonFeatureCollection(regions, locations);
+			string urlEncodedData = Uri.EscapeDataString(combinedGeoJson);
+			string url = $"http://geojson.io/#data=data:application/json,{urlEncodedData}";
+			Process.Start(new ProcessStartInfo { FileName = url, UseShellExecute = true });
 		}
 	}
 }

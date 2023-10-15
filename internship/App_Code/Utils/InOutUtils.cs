@@ -1,4 +1,5 @@
-﻿using System.Text.Json;
+﻿using System.Text;
+using System.Text.Json;
 using internship.Classes;
 using Microsoft.Extensions.Configuration;
 
@@ -65,6 +66,32 @@ namespace internship.Utils
 			string locationsJson = File.ReadAllText(locationsFilePath);
 
 			return (regionsJson, locationsJson, outputFilePath);
+		}
+
+		/// <summary>
+		/// Convert regions and locations to GeoJSON FeatureCollection
+		/// </summary>
+		/// <param name="regions">regions containing polygons</param>
+		/// <param name="locations">locations containing a coordinate</param>
+		/// <returns>JSON string of GeoJSON FeatureCollection</returns>
+		public static string ToGeoJsonFeatureCollection(
+			List<Region> regions,
+			List<Location> locations
+		)
+		{
+			var features = regions
+				.Select(region => JsonSerializer.Deserialize<object>(region.ToGeoJson()))
+				.ToList();
+
+			features.AddRange(
+				locations.Select(
+					location => JsonSerializer.Deserialize<object>(location.ToGeoJson())
+				)
+			);
+
+			var featureCollection = new { type = "FeatureCollection", features };
+
+			return JsonSerializer.Serialize(featureCollection);
 		}
 	}
 }

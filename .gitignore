@@ -491,3 +491,5 @@ fabric.properties
 
 
 .idea/*
+
+*.idea

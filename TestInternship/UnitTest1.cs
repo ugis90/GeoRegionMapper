@@ -10,6 +10,46 @@ namespace TestInternship
 			Assert.Equal(1, coord.X);
 			Assert.Equal(2, coord.Y);
 		}
+
+		[Fact]
+		public void CreateMethod_ShouldInitializeCorrectly()
+		{
+			Coordinate coord = Coordinate.Create(new List<double> { 45, 90 });
+
+			Assert.Equal(45, coord.X);
+			Assert.Equal(90, coord.Y);
+		}
+
+		[Fact]
+		public void CreateMethod_ShouldThrowExceptionForInvalidListCount()
+		{
+			Assert.Throws<ArgumentException>(() => Coordinate.Create(new List<double> { 1.0 }));
+			Assert.Throws<ArgumentException>(
+				() => Coordinate.Create(new List<double> { 1.0, 2.0, 3.0 })
+			);
+		}
+
+		[Fact]
+		public void CreateMethod_ShouldThrowExceptionForInvalidLongitude()
+		{
+			Assert.Throws<ArgumentException>(() => Coordinate.Create(new List<double> { 181, 45 }));
+			Assert.Throws<ArgumentException>(
+				() => Coordinate.Create(new List<double> { -181, 45 })
+			);
+		}
+
+		[Fact]
+		public void CreateMethod_ShouldThrowExceptionForInvalidLatitude()
+		{
+			Assert.Throws<ArgumentException>(() => Coordinate.Create(new List<double> { 45, 91 }));
+			Assert.Throws<ArgumentException>(() => Coordinate.Create(new List<double> { 45, -91 }));
+		}
+
+		[Fact]
+		public void CoordinateConstructor_ShouldThrowExceptionForInvalidArgs()
+		{
+			Assert.Throws<ArgumentException>(() => Coordinate.Create(new List<double> { 1.0 }));
+		}
 	}
 
 	public class LocationConverterTests
@@ -123,18 +163,63 @@ namespace TestInternship
 			var polygon = new Polygon(
 				new List<List<double>>
 				{
-					new List<double> { 1, 2 },
-					new List<double> { 3, 4 }
+					new() { 1, 2 },
+					new() { 3, 4 }
 				}
 			);
 
 			Assert.Equal(2, polygon.Coordinates.Count);
+
+			Assert.Equal(1, polygon.Coordinates[0].X);
+			Assert.Equal(2, polygon.Coordinates[0].Y);
+
+			Assert.Equal(3, polygon.Coordinates[1].X);
+			Assert.Equal(4, polygon.Coordinates[1].Y);
+		}
+
+		// TODO: how to validate coordinates
+		[Fact]
+		public void PolygonConstructor_ShouldThrowException_WhenInvalidCoordinateCount()
+		{
+			Assert.Throws<ArgumentException>(
+				() => new Polygon(new List<List<double>> { new() { 1 } })
+			);
+		}
+
+		[Fact]
+		public void PolygonConstructor_ShouldThrowException_WhenNullCoordinate()
+		{
+			Assert.Throws<ArgumentException>(() => new Polygon(new List<List<double>> { null }));
+		}
+
+		[Fact]
+		public void PolygonConstructor_ShouldThrowException_WhenNullCoordinatesListElement()
+		{
+			Assert.Throws<ArgumentException>(
+				() =>
+					new Polygon(
+						new List<List<double>>
+						{
+							new() { 1, 2 },
+							null
+						}
+					)
+			);
 		}
 
 		[Fact]
 		public void PolygonConstructor_ShouldThrowException_WhenInvalidCoordinates()
 		{
-			Assert.Throws<ArgumentException>(() => new Polygon(new List<List<double>>()));
+			Assert.Throws<ArgumentException>(
+				() =>
+					new Polygon(
+						new List<List<double>>
+						{
+							new() { 2000, 300 },
+							new() { -300, -400 }
+						}
+					)
+			);
 		}
 
 		[Fact]
@@ -253,7 +338,7 @@ namespace TestInternship
 				"TestRegion",
 				new List<List<List<double>>>
 				{
-					new List<List<double>>
+					new()
 					{
 						new List<double> { 1, 2 },
 						new List<double> { 3, 4 }
@@ -274,7 +359,7 @@ namespace TestInternship
 						"",
 						new List<List<List<double>>>
 						{
-							new List<List<double>>
+							new()
 							{
 								new List<double> { 1, 2 }
 							}
@@ -292,7 +377,7 @@ namespace TestInternship
 						null,
 						new List<List<List<double>>>
 						{
-							new List<List<double>>
+							new()
 							{
 								new List<double> { 1, 2 }
 							}
@@ -317,10 +402,10 @@ namespace TestInternship
 			var polygon = new Polygon(
 				new List<List<double>>
 				{
-					new List<double> { 0, 0 },
-					new List<double> { 2, 0 },
-					new List<double> { 2, 2 },
-					new List<double> { 0, 2 }
+					new() { 0, 0 },
+					new() { 2, 0 },
+					new() { 2, 2 },
+					new() { 0, 2 }
 				}
 			);
 
@@ -336,10 +421,10 @@ namespace TestInternship
 			var polygon = new Polygon(
 				new List<List<double>>
 				{
-					new List<double> { 0, 0 },
-					new List<double> { 2, 0 },
-					new List<double> { 2, 2 },
-					new List<double> { 0, 2 }
+					new() { 0, 0 },
+					new() { 2, 0 },
+					new() { 2, 2 },
+					new() { 0, 2 }
 				}
 			);
 
@@ -355,10 +440,10 @@ namespace TestInternship
 			var polygon = new Polygon(
 				new List<List<double>>
 				{
-					new List<double> { 0, 0 },
-					new List<double> { 2, 0 },
-					new List<double> { 2, 2 },
-					new List<double> { 0, 2 }
+					new() { 0, 0 },
+					new() { 2, 0 },
+					new() { 2, 2 },
+					new() { 0, 2 }
 				}
 			);
 
@@ -374,10 +459,10 @@ namespace TestInternship
 			var polygon = new Polygon(
 				new List<List<double>>
 				{
-					new List<double> { 0, 0 },
-					new List<double> { 2, 0 },
-					new List<double> { 2, 2 },
-					new List<double> { 0, 2 }
+					new() { 0, 0 },
+					new() { 2, 0 },
+					new() { 2, 2 },
+					new() { 0, 2 }
 				}
 			);
 
@@ -392,10 +477,10 @@ namespace TestInternship
 			var polygon = new Polygon(
 				new List<List<double>>
 				{
-					new List<double> { 0, 0 },
-					new List<double> { 2, 0 },
-					new List<double> { 2, 2 },
-					new List<double> { 0, 2 }
+					new() { 0, 0 },
+					new() { 2, 0 },
+					new() { 2, 2 },
+					new() { 0, 2 }
 				}
 			);
 			Assert.Throws<ArgumentNullException>(() => TaskUtils.IsPointInPolygon(null, polygon));
@@ -415,7 +500,7 @@ namespace TestInternship
 				"TestRegion",
 				new List<List<List<double>>>
 				{
-					new List<List<double>>
+					new()
 					{
 						new List<double> { 0, 0 },
 						new List<double> { 2, 0 },
@@ -443,7 +528,7 @@ namespace TestInternship
 				"TestRegion",
 				new List<List<List<double>>>
 				{
-					new List<List<double>>
+					new()
 					{
 						new List<double> { 0, 0 },
 						new List<double> { 2, 0 },
@@ -454,8 +539,8 @@ namespace TestInternship
 			);
 			var locations = new List<Location>
 			{
-				new Location("Location1", new List<double> { 1, 1 }),
-				new Location("Location2", new List<double> { 1.5, 1.5 })
+				new("Location1", new List<double> { 1, 1 }),
+				new("Location2", new List<double> { 1.5, 1.5 })
 			};
 
 			List<MatchedRegion> matched = TaskUtils.MatchRegionsAndLocations(
@@ -473,7 +558,7 @@ namespace TestInternship
 				"TestRegion",
 				new List<List<List<double>>>
 				{
-					new List<List<double>>
+					new()
 					{
 						new List<double> { 0, 0 },
 						new List<double> { 2, 0 },

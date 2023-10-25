@@ -28,22 +28,21 @@ namespace internship
 					locations
 				);
 				string resultsJson = JsonSerializer.Serialize(results, options);
-
 				File.WriteAllText(outputFilePath, resultsJson);
 			}
 			catch (FileNotFoundException e)
 			{
-				Console.WriteLine($"File not found: {e.Message}");
+				Console.WriteLine($"File not found: {e.Message}\n{e.StackTrace}");
 				Environment.Exit(1);
 			}
 			catch (JsonException e)
 			{
-				Console.WriteLine($"JSON error: {e.Message}");
+				Console.WriteLine($"JSON error: {e.Message}\n{e.StackTrace}");
 				Environment.Exit(1);
 			}
 			catch (Exception e)
 			{
-				Console.WriteLine($"An error occurred: {e.Message}");
+				Console.WriteLine($"An error occurred: {e.Message}\n{e.StackTrace}");
 				Environment.Exit(1);
 			}
 
@@ -54,7 +53,7 @@ namespace internship
 			}
 			catch (Exception e)
 			{
-				Console.WriteLine($"Failed to open browser: {e.Message}");
+				Console.WriteLine($"Failed to open browser: {e.Message}\n{e.StackTrace}");
 			}
 		}
 	}

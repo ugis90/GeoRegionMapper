@@ -30,7 +30,7 @@ public class Location
 		}
 
 		Name = name;
-		Coordinate = new Coordinate(coordinates[0], coordinates[1]);
+		Coordinate = Coordinate.Create(coordinates);
 	}
 
 	/// <summary>
@@ -42,11 +42,7 @@ public class Location
 		var feature = new
 		{
 			type = "Feature",
-			geometry = new
-			{
-				type = "Point",
-				coordinates = new double[] { Coordinate.X, Coordinate.Y }
-			},
+			geometry = new { type = "Point", coordinates = new[] { Coordinate.X, Coordinate.Y } },
 			properties = new { name = Name }
 		};
 

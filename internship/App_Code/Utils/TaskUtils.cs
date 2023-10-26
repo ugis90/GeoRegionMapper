@@ -1,7 +1,7 @@
-﻿using internship.Classes;
+﻿using GeoRegionMapper.Classes;
 using System.Diagnostics;
 
-namespace internship.Utils;
+namespace GeoRegionMapper.Utils;
 
 public static class TaskUtils
 {

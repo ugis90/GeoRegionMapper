@@ -1,7 +1,7 @@
 ﻿using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace internship.Classes;
+namespace GeoRegionMapper.Classes;
 
 /// <summary>
 /// Class to represent a location with name and coordinate

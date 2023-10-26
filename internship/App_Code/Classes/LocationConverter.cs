@@ -1,7 +1,7 @@
 ﻿using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace internship.Classes
+namespace GeoRegionMapper.Classes
 {
 	public class LocationConverter : JsonConverter<Location>
 	{

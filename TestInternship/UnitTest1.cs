@@ -1,4 +1,4 @@
-namespace TestInternship
+namespace TestGeoRegionMapper
 {
 	public class CoordinateTests
 	{

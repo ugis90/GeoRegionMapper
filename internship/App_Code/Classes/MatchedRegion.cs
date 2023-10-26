@@ -1,4 +1,4 @@
-﻿namespace internship.Classes;
+﻿namespace GeoRegionMapper.Classes;
 
 /// <summary>
 /// Class to represent a matched region with a name and a list of matched locations

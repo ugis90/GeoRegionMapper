@@ -22,7 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\internship\internship.csproj" />
+    <ProjectReference Include="..\internship\GeoRegionMapper.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,7 +1,7 @@
 ﻿using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace internship.Classes;
+namespace GeoRegionMapper.Classes;
 
 /// <summary>
 /// Class to represent a region with a name and a list of polygons

@@ -1,4 +1,4 @@
-﻿namespace internship.Classes
+﻿namespace GeoRegionMapper.Classes
 {
 	public class Coordinate
 	{

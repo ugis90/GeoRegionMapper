@@ -1,8 +1,8 @@
 ﻿using System.Text.Json;
-using internship.Classes;
+using GeoRegionMapper.Classes;
 using Microsoft.Extensions.Configuration;
 
-namespace internship.Utils
+namespace GeoRegionMapper.Utils
 {
 	public static class InOutUtils
 	{

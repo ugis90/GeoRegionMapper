@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace internship.Classes;
+namespace GeoRegionMapper.Classes;
 
 public class Polygon
 {

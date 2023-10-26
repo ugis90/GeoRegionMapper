@@ -1,9 +1,9 @@
 ﻿using System.Text.Json;
-using internship.Classes;
-using internship.Utils;
+using GeoRegionMapper.Classes;
+using GeoRegionMapper.Utils;
 using Microsoft.Extensions.Configuration;
 
-namespace internship
+namespace GeoRegionMapper
 {
 	internal class Program
 	{

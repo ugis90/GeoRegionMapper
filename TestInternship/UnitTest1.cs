@@ -246,7 +246,7 @@ namespace TestGeoRegionMapper
 			}
 			catch (JsonException ex)
 			{
-				Assert.True(false, "Deserialization failed: " + ex.Message);
+				Assert.Fail("Deserialization failed: " + ex.Message);
 				return;
 			}
 
@@ -268,7 +268,7 @@ namespace TestGeoRegionMapper
 			}
 			catch (JsonException ex)
 			{
-				Assert.True(false, "Deserialization failed: " + ex.Message);
+				Assert.Fail("Deserialization failed: " + ex.Message);
 				return;
 			}
 

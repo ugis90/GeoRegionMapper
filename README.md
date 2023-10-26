@@ -1,4 +1,4 @@
-# Internship
+# GeoRegionMapper
 
 ### Introduction
 
@@ -19,11 +19,11 @@ This program links locations to regions using their coordinates. It works by:
 ## Installation
 1. Clone the GitHub repository.
     ```bash
-    git clone https://github.com/ugis90/internship.git
+    git clone https://github.com/ugis90/GeoRegionMapper.git
     ```
 2. Navigate to the project directory.
     ```bash
-    cd internship
+    cd GeoRegionMapper
     ```
 
 ## How to Compile and Run
